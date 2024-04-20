@@ -185,7 +185,7 @@ def main():
         title = title_queue.pop(0)
         logger.log(
             logging.INFO,
-            f"Querying new story with title {title} ({story_id + 1} of {num_stories})",
+            f"Querying new story with title '{title}' ({story_id + 1} of {num_stories})",
         )
 
         # Query story
