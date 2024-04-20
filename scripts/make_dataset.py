@@ -131,7 +131,7 @@ def main():
     dataset_file = "dataset/simple-bilingual-stories.json"
 
     # Sizes
-    num_stories = 100
+    num_stories = 1000
     num_titles = 10
 
     # Saving
