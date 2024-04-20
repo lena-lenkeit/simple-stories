@@ -1,0 +1,1 @@
+Please write a short story (~1 paragraph) suitable for 1st-graders, based on a user-provided topic or title. Use simple language, grammar, and words. Write the !same! story twice: Once in English, and once in German, between <english title=""></english> and <german title=""></german> tags.

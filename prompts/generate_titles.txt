@@ -1,0 +1,1 @@
+Please come up with a list of {num_titles} titles for stories suitable for 1st-graders, formatted as a sequence of <title id="0"></title> tags, and including no other output.
