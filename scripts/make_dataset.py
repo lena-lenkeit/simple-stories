@@ -44,7 +44,7 @@ def sample_titles(client: Anthropic, prompt: str, num_titles: int = 10) -> List[
     title_string = message.content[0].text
     xml_string = f"<root>{title_string}</root>"
     root = ET.fromstring(xml_string)
-    titles = [title.text for title in root.findall("title")]
+    titles = [title.text.strip() for title in root.findall("title")]
 
     if len(titles) != num_titles:
         raise ValueError("Length mismatch between requested and received title list")
@@ -76,8 +76,14 @@ def sample_story(client: Anthropic, prompt: str, title: str) -> BilingualStory:
     german_story = root.find("german")
 
     return BilingualStory(
-        english=Story(title=english_story.attrib["title"], text=english_story.text),
-        german=Story(title=german_story.attrib["title"], text=german_story.text),
+        english=Story(
+            title=english_story.find("title").text.strip(),
+            text=english_story.find("text").text.strip(),
+        ),
+        german=Story(
+            title=german_story.find("title").text.strip(),
+            text=german_story.find("text").text.strip(),
+        ),
     )
 
 
