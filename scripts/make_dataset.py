@@ -6,24 +6,10 @@ import xml.etree.ElementTree as ET
 from typing import Callable, List, TypeVar
 
 from anthropic import Anthropic
-from pydantic import BaseModel
+from dataset_model import BilingualStory, BilingualStoryDataset
 from tqdm.auto import trange
 
 logger = logging.getLogger(__name__)
-
-
-class Story(BaseModel):
-    title: str
-    text: str
-
-
-class BilingualStory(BaseModel):
-    english: Story
-    german: Story
-
-
-class BilingualStoryDataset(BaseModel):
-    stories: List[BilingualStory]
 
 
 def sample_titles(client: Anthropic, prompt: str, num_titles: int = 10) -> List[str]:
