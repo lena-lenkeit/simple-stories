@@ -1,6 +1,4 @@
-import itertools
 import re
-from pickle import encode_long
 from typing import List, Tuple
 
 from dataset_model import BilingualStoryDataset
@@ -47,15 +45,34 @@ def to_list_of_sentences(dataset: BilingualStoryDataset) -> Tuple[List[str], Lis
 
 
 def main():
-    with open("dataset/simple-bilingual-stories.json", mode="r") as f:
+    # Paths
+    dataset_file = "dataset/simple-bilingual-stories.json"
+
+    eng_sentence_file = "dataset/simple-bilingual-stories-eng-sentences.txt"
+    ger_sentence_file = "dataset/simple-bilingual-stories-ger-sentences.txt"
+
+    jsonl_file = "dataset/simple-bilingual-stories.jsonl"
+
+    # Load dataset
+    with open(dataset_file, mode="r") as f:
         dataset = BilingualStoryDataset.model_validate_json(f.read())
 
+    # Split into sentences
     english_sentences, german_sentences = to_list_of_sentences(dataset)
 
-    with open("dataset/simple-bilingual-stories-eng-sentences.txt", mode="w") as f:
+    # Save to newline-separated .txt
+    with open(eng_sentence_file, mode="w") as f:
         f.write("\n".join(english_sentences))
-    with open("dataset/simple-bilingual-stories-ger-sentences.txt", mode="w") as f:
+    with open(ger_sentence_file, mode="w") as f:
         f.write("\n".join(german_sentences))
+
+    # Write dataset to .jsonl
+    json_lines = []
+    for story in dataset.stories:
+        json_lines.append(story.model_dump_json())
+
+    with open(jsonl_file, mode="w") as f:
+        f.write("\n".join(json_lines))
 
 
 if __name__ == "__main__":
