@@ -5,6 +5,7 @@ import time
 import xml.etree.ElementTree as ET
 from typing import Callable, List, TypeVar
 
+import anthropic
 from anthropic import Anthropic
 from dataset_model import BilingualStory, BilingualStoryDataset, Story
 from tqdm.auto import trange
@@ -117,7 +118,7 @@ def main():
     dataset_file = "dataset/simple-bilingual-stories.json"
 
     # Sizes
-    num_stories = 1000
+    num_stories = 10000
     num_titles = 10
 
     # Saving
@@ -160,7 +161,8 @@ def main():
 
     # Query new stories
     title_queue = []
-    for story_id in trange(len(story_dataset.stories), num_stories):
+
+    def query_story():
         # Query new titles, if none left
         if len(title_queue) == 0:
             logger.log(
@@ -177,6 +179,16 @@ def main():
         # Query story
         story = sample_story(client, story_prompt, title)
         story_dataset.stories.append(story)
+
+    for story_id in trange(len(story_dataset.stories), num_stories):
+        query_successful = False
+        while not query_successful:
+            try:
+                query_story()
+                query_successful = True
+            except anthropic.BadRequestError as e:
+                logger.warning(f"{e}")
+                pass
 
         # Handle saving and graceful exiting
         do_save = len(story_dataset.stories) % save_interval == 0
