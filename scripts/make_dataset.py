@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ET
 from typing import Callable, List, TypeVar
 
 from anthropic import Anthropic
-from dataset_model import BilingualStory, BilingualStoryDataset
+from dataset_model import BilingualStory, BilingualStoryDataset, Story
 from tqdm.auto import trange
 
 logger = logging.getLogger(__name__)
