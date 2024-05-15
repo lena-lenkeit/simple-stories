@@ -1,4 +1,4 @@
-# Simple Stories
+# Simple (Bilingual) Stories
 A dataset of 10k short and very simple bilingual (English/German) stories sampled from Claude 3 Haiku. This dataset is part of my research project on Unsupervised Machine Translation. Inspired by [TinyStories](https://arxiv.org/abs/2305.07759), the key difference here is the bilingual nature of the stories. The repository also includes the scripts and prompts used for sampling, allowing for the creation of larger or stylistically different datasets.
 
 ## License
